@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/my_nav"
+    app:startDestination="@id/homeragment">
+
+    <fragment
+        android:id="@+id/homeragment"
+        android:name="com.example.memoandjokesapp.HomeFragment"
+        android:label="fragment_homeragment"
+        tools:layout="@layout/fragment_homefragment" >
+        <action
+            android:id="@+id/action_homeragment_to_jokesFragment"
+            app:destination="@id/jokesFragment" />
+        <action
+            android:id="@+id/action_homeragment_to_memoFragment"
+            app:destination="@id/memoFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/jokesFragment"
+        android:name="com.example.memoandjokesapp.JokesFragment"
+        android:label="fragment_jokes"
+        tools:layout="@layout/fragment_jokes" >
+        <action
+            android:id="@+id/action_jokesFragment_to_homeragment"
+            app:destination="@id/homeragment"
+            app:popUpTo="@id/homeragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/memoFragment"
+        android:name="com.example.memoandjokesapp.MemoFragment"
+        android:label="fragment_memo"
+        tools:layout="@layout/fragment_memo" >
+        <action
+            android:id="@+id/action_memoFragment_to_homeragment"
+            app:destination="@id/homeragment"
+            app:popUpTo="@id/homeragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+</navigation>
