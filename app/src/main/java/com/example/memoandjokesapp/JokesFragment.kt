@@ -37,9 +37,10 @@ class JokesFragment : Fragment() {
 
         val generateNewJokeButton = binding.btnNewJoke
         generateNewJokeButton.setOnClickListener {
-           CoroutineScope(Dispatchers.IO).launch {
+            Log.d(TAG, "onCreateView: Click click")
+          /* CoroutineScope(Dispatchers.IO).launch {
                getRandomJoke()
-           }
+           }*/
         }
 
         val returnHomeButton = binding.btnHome
@@ -54,11 +55,6 @@ class JokesFragment : Fragment() {
         _binding = null
     }
     private suspend fun getRandomJoke(){
-
-        val joke = RetrofitInstance.api.getJoke()
-        if (joke != null){
-            Log.d(TAG, "getRandomJoke: $joke")
-        }
         /*val response = try {
             RetrofitInstance.api.getJoke()
         }catch (e: IOException){

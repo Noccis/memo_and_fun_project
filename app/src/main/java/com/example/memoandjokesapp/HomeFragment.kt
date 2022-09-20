@@ -34,6 +34,7 @@ class HomeFragment : Fragment() {
             findNavController().navigate(R.id.action_homeragment_to_memoFragment)
         }
 
+
         return view
     }
 
