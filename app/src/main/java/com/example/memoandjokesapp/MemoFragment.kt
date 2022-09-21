@@ -13,6 +13,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.memoandjokesapp.data.Todo
 import com.example.memoandjokesapp.data.TodoAdapter
 import com.example.memoandjokesapp.databinding.FragmentMemoBinding
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class MemoFragment : Fragment() {
 
@@ -35,7 +38,7 @@ class MemoFragment : Fragment() {
             findNavController().navigate(R.id.action_memoFragment_to_homeragment)
         }*/
 
-        listOfTodos.add(Todo("Dodo", false))
+
         // Setting up my recyclerview
         todoAdapter = TodoAdapter(listOfTodos)
         binding.rvTodos.adapter = todoAdapter
