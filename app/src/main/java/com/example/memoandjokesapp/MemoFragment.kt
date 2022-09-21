@@ -10,8 +10,8 @@ import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.memoandjokesapp.data.Todo
 import com.example.memoandjokesapp.data.TodoAdapter
-import com.example.memoandjokesapp.data.TodoListManager
 import com.example.memoandjokesapp.databinding.FragmentMemoBinding
 
 class MemoFragment : Fragment() {
@@ -20,6 +20,7 @@ class MemoFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var todoAdapter: TodoAdapter
     private lateinit var userInputEditText: EditText
+    val listOfTodos = mutableListOf<Todo>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -34,14 +35,15 @@ class MemoFragment : Fragment() {
             findNavController().navigate(R.id.action_memoFragment_to_homeragment)
         }*/
 
+        listOfTodos.add(Todo("Dodo", false))
         // Setting up my recyclerview
-        todoAdapter = TodoAdapter()
+        todoAdapter = TodoAdapter(listOfTodos)
         binding.rvTodos.adapter = todoAdapter
 
         userInputEditText = binding.etUserInput
         val addTodoButton = binding.btnAddTodo
         addTodoButton.setOnClickListener {
-            addNewTodo()
+        //    addNewTodo()
         }
 
 
@@ -53,7 +55,7 @@ class MemoFragment : Fragment() {
         _binding = null
     }
 
-    fun addNewTodo(){
+    /*fun addNewTodo(){
         if (userInputEditText.text != null){
             val inputText = userInputEditText.text.toString()
             TodoListManager.addTodo(inputText)
@@ -62,6 +64,6 @@ class MemoFragment : Fragment() {
         }else{
             Toast.makeText(requireContext(), "Invalid input", Toast.LENGTH_SHORT).show()
         }
-    }
+    }*/
 
 }
