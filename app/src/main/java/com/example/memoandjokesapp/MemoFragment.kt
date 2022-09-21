@@ -10,8 +10,10 @@ import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.room.Room
 import com.example.memoandjokesapp.data.Todo
 import com.example.memoandjokesapp.data.TodoAdapter
+import com.example.memoandjokesapp.data.TodoRoomDatabase
 import com.example.memoandjokesapp.databinding.FragmentMemoBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -24,6 +26,7 @@ class MemoFragment : Fragment() {
     private lateinit var todoAdapter: TodoAdapter
     private lateinit var userInputEditText: EditText
     val listOfTodos = mutableListOf<Todo>()
+    lateinit var db: TodoRoomDatabase
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -33,11 +36,11 @@ class MemoFragment : Fragment() {
        _binding = FragmentMemoBinding.inflate(inflater, container, false)
         val view = binding.root
 
-        /*val returnHomeButton = binding.btnReturnHome
-        returnHomeButton.setOnClickListener {
-            findNavController().navigate(R.id.action_memoFragment_to_homeragment)
-        }*/
-
+        db = Room.databaseBuilder(
+            requireContext(),
+            TodoRoomDatabase::class.java,
+            "todo_database"
+        ).build()
 
         // Setting up my recyclerview
         todoAdapter = TodoAdapter(listOfTodos)
@@ -49,6 +52,10 @@ class MemoFragment : Fragment() {
         //    addNewTodo()
         }
 
+
+        CoroutineScope(Dispatchers.IO).launch {
+           // Write code here
+        }
 
         return view
     }
