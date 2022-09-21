@@ -53,7 +53,7 @@ class MemoFragment : Fragment() {
         userInputEditText = binding.etUserInput
         val addTodoButton = binding.btnAddTodo
         addTodoButton.setOnClickListener {
-        //    addNewTodo()
+            addNewTodo()
 
         }
 
@@ -82,15 +82,19 @@ class MemoFragment : Fragment() {
         _binding = null
     }
 
-    /*fun addNewTodo(){
+    fun addNewTodo(){
         if (userInputEditText.text != null){
             val inputText = userInputEditText.text.toString()
-            TodoListManager.addTodo(inputText)
+            val newTodo = Todo(0, inputText, false)
+            CoroutineScope(Dispatchers.IO).launch {
+                db.todoDao().insert(newTodo)
+            }
+            listOfTodos.add(newTodo)
             todoAdapter.notifyDataSetChanged()
             userInputEditText.setText("")
         }else{
             Toast.makeText(requireContext(), "Invalid input", Toast.LENGTH_SHORT).show()
         }
-    }*/
+    }
 
 }
