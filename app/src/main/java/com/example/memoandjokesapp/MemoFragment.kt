@@ -97,4 +97,8 @@ class MemoFragment : Fragment() {
         }
     }
 
+    fun deleteTodo(todo: Todo){
+
+    }
+
 }
