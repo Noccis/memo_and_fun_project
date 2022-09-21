@@ -19,6 +19,7 @@ import com.example.memoandjokesapp.databinding.FragmentMemoBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class MemoFragment : Fragment() {
 
@@ -62,6 +63,14 @@ class MemoFragment : Fragment() {
             if (result != null){
                 testList = result
                 Log.d("dodo", "Result is not null! $testList")
+                testList.forEach {
+                    listOfTodos.add(it)
+
+                }
+                withContext(Dispatchers.Main){
+                    todoAdapter.notifyDataSetChanged()
+                }
+
             }
         }
 
