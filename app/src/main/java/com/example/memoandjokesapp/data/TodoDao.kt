@@ -8,12 +8,9 @@ import androidx.room.Query
 
 @Dao
 interface TodoDao {
-
     @Query("SELECT * FROM todo_table")
     fun getAllTodos(): List<Todo>
 
     @Insert
     fun insert(vararg todo: Todo)
-
-
 }

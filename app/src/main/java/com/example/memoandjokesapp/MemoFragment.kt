@@ -1,6 +1,7 @@
 package com.example.memoandjokesapp
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -46,15 +47,22 @@ class MemoFragment : Fragment() {
         todoAdapter = TodoAdapter(listOfTodos)
         binding.rvTodos.adapter = todoAdapter
 
+        var testList: List<Todo>
+
         userInputEditText = binding.etUserInput
         val addTodoButton = binding.btnAddTodo
         addTodoButton.setOnClickListener {
         //    addNewTodo()
+
         }
 
 
         CoroutineScope(Dispatchers.IO).launch {
-           // Write code here
+           val result = db.todoDao().getAllTodos()
+            if (result != null){
+                testList = result
+                Log.d("dodo", "Result is not null! $testList")
+            }
         }
 
         return view
