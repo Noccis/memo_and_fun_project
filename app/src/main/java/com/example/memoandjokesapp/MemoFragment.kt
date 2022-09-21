@@ -1,6 +1,7 @@
 package com.example.memoandjokesapp
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -10,9 +11,15 @@ import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.room.Room
+import com.example.memoandjokesapp.data.Todo
 import com.example.memoandjokesapp.data.TodoAdapter
-import com.example.memoandjokesapp.data.TodoListManager
+import com.example.memoandjokesapp.data.TodoRoomDatabase
 import com.example.memoandjokesapp.databinding.FragmentMemoBinding
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class MemoFragment : Fragment() {
 
@@ -20,6 +27,8 @@ class MemoFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var todoAdapter: TodoAdapter
     private lateinit var userInputEditText: EditText
+    val listOfTodos = mutableListOf<Todo>()
+    lateinit var db: TodoRoomDatabase
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -29,21 +38,41 @@ class MemoFragment : Fragment() {
        _binding = FragmentMemoBinding.inflate(inflater, container, false)
         val view = binding.root
 
-        /*val returnHomeButton = binding.btnReturnHome
-        returnHomeButton.setOnClickListener {
-            findNavController().navigate(R.id.action_memoFragment_to_homeragment)
-        }*/
+        db = Room.databaseBuilder(
+            requireContext(),
+            TodoRoomDatabase::class.java,
+            "todo_database"
+        ).build()
 
         // Setting up my recyclerview
-        todoAdapter = TodoAdapter()
+        todoAdapter = TodoAdapter(listOfTodos)
         binding.rvTodos.adapter = todoAdapter
+
+        var testList: List<Todo>
 
         userInputEditText = binding.etUserInput
         val addTodoButton = binding.btnAddTodo
         addTodoButton.setOnClickListener {
-            addNewTodo()
+        //    addNewTodo()
+
         }
 
+
+        CoroutineScope(Dispatchers.IO).launch {
+           val result = db.todoDao().getAllTodos()
+            if (result != null){
+                testList = result
+                Log.d("dodo", "Result is not null! $testList")
+                testList.forEach {
+                    listOfTodos.add(it)
+
+                }
+                withContext(Dispatchers.Main){
+                    todoAdapter.notifyDataSetChanged()
+                }
+
+            }
+        }
 
         return view
     }
@@ -53,7 +82,7 @@ class MemoFragment : Fragment() {
         _binding = null
     }
 
-    fun addNewTodo(){
+    /*fun addNewTodo(){
         if (userInputEditText.text != null){
             val inputText = userInputEditText.text.toString()
             TodoListManager.addTodo(inputText)
@@ -62,6 +91,6 @@ class MemoFragment : Fragment() {
         }else{
             Toast.makeText(requireContext(), "Invalid input", Toast.LENGTH_SHORT).show()
         }
-    }
+    }*/
 
 }
