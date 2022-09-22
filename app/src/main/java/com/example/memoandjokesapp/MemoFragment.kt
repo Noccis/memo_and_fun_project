@@ -45,7 +45,7 @@ class MemoFragment : Fragment() {
         ).build()
 
         // Setting up my recyclerview
-        todoAdapter = TodoAdapter(listOfTodos)
+        todoAdapter = TodoAdapter(listOfTodos, requireContext())
         binding.rvTodos.adapter = todoAdapter
 
         var testList: List<Todo>
@@ -77,6 +77,8 @@ class MemoFragment : Fragment() {
         return view
     }
 
+
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
@@ -98,7 +100,7 @@ class MemoFragment : Fragment() {
     }
 
     fun deleteTodo(todo: Todo){
-
+        db.todoDao().deleteTodo(todo)
     }
 
 }
