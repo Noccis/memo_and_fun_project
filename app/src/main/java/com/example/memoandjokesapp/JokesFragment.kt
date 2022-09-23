@@ -14,6 +14,7 @@ import com.example.memoandjokesapp.databinding.FragmentJokesBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import retrofit2.HttpException
 import java.io.IOException
 
@@ -31,16 +32,15 @@ class JokesFragment : Fragment() {
         _binding = FragmentJokesBinding.inflate(inflater, container, false)
         val view = binding.root
 
-      /*  lifecycleScope.launchWhenCreated {
+        lifecycleScope.launchWhenCreated {
             getRandomJoke()
-        }*/
+        }
 
         val generateNewJokeButton = binding.btnNewJoke
         generateNewJokeButton.setOnClickListener {
-            Log.d(TAG, "onCreateView: Click click")
-          /* CoroutineScope(Dispatchers.IO).launch {
+           CoroutineScope(Dispatchers.IO).launch {
                getRandomJoke()
-           }*/
+           }
         }
 
         val returnHomeButton = binding.btnHome
@@ -55,7 +55,7 @@ class JokesFragment : Fragment() {
         _binding = null
     }
     private suspend fun getRandomJoke(){
-        /*val response = try {
+        val response = try {
             RetrofitInstance.api.getJoke()
         }catch (e: IOException){
             Log.e(TAG, "IO exception, you might not have internet connection ")
@@ -65,10 +65,12 @@ class JokesFragment : Fragment() {
             return
         }
         if (response.isSuccessful && response.body() != null){
-            // Set joke text
+            withContext(Dispatchers.Main){
+                binding.tvRandomJoke.text = response.body()!!.value
+            }
             Log.d(TAG, "Response successful: $response")
         }else{
             Log.e(TAG, "Response not successful")
-        }*/
+        }
     }
 }
