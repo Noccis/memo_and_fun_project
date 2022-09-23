@@ -14,6 +14,7 @@ import kotlin.math.log
 
 class TodoAdapter(val listOfTodos: MutableList<Todo>, val context: Context) : RecyclerView.Adapter<TodoAdapter.ViewHolder>(){
 
+
     override fun getItemCount(): Int {
         return listOfTodos.size
     }

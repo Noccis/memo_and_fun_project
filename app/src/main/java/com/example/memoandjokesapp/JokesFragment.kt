@@ -38,7 +38,6 @@ class JokesFragment : Fragment() {
 
         val generateNewJokeButton = binding.btnNewJoke
         generateNewJokeButton.setOnClickListener {
-            Log.d(TAG, "onCreateView: Click click")
            CoroutineScope(Dispatchers.IO).launch {
                getRandomJoke()
            }
@@ -69,7 +68,6 @@ class JokesFragment : Fragment() {
             withContext(Dispatchers.Main){
                 binding.tvRandomJoke.text = response.body()!!.value
             }
-            // Set joke text
             Log.d(TAG, "Response successful: $response")
         }else{
             Log.e(TAG, "Response not successful")
